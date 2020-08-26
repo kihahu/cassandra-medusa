@@ -90,7 +90,7 @@ class CqlSessionProvider(object):
                           ssl_context=self._ssl_context)
 
         if retry:
-            max_retries = 5
+            max_retries = 7
             attempts = 0
 
             while attempts < max_retries:
