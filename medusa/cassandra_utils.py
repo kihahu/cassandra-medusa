@@ -92,7 +92,6 @@ class CqlSessionProvider(object):
         if retry:
             max_retries = 5
             attempts = 0
-            delay = 5
 
             while attempts < max_retries:
                 try:
@@ -100,6 +99,7 @@ class CqlSessionProvider(object):
                     return CqlSession(session, self._cassandra_config.resolve_ip_addresses)
                 except Exception as e:
                     logging.debug('Failed to create session', exc_info=e)
+                delay = 5 * (2 ** (attempts + 1))
                 time.sleep(delay)
                 attempts = attempts + 1
             raise Exception('Could not establish CQL session after {attempts}'.format(attempts=attempts))
